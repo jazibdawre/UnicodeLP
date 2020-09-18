@@ -1,10 +1,12 @@
 var express = require('express');
 const Employees = require('../models/employees');
 
+var authenticate = require('../authenticate');
+
 var employeeRouter = express.Router();
 
 employeeRouter.route('/')
-.get(async (req, res, next) => {
+.get(authenticate.verifyUser, async (req, res, next) => {
 	try {
 		const employees = await Employees.find({}).populate('projects');
 		res.statusCode = 200;
@@ -18,7 +20,7 @@ employeeRouter.route('/')
     res.statusCode = 403;
     res.end('PUT operation not supported on /employees');
 })
-.post(async (req, res, next) => {
+.post(authenticate.verifyUser, async (req, res, next) => {
 	try {
 		const employee = await Employees.create(req.body);
 		res.statusCode = 200;
@@ -34,7 +36,7 @@ employeeRouter.route('/')
 });
 
 employeeRouter.route('/:employeeId')
-.get(async (req, res, next) => {
+.get(authenticate.verifyUser, async (req, res, next) => {
 	try {
 		const employee = await Employees.findById(req.params.employeeId).populate('projects');
 		res.statusCode = 200;
@@ -48,7 +50,7 @@ employeeRouter.route('/:employeeId')
 	res.statusCode = 403;
 	res.end('POST operation not supported on /employees/'+ req.params.employeeId);
 })
-.put(async (req, res, next) => {
+.put(authenticate.verifyUser, async (req, res, next) => {
 	try {
 		const employee = await Employees.findByIdAndUpdate(req.params.employeeId, { $set: req.body }, { new: true }); //new returns the modified employee data
 		res.statusCode = 200;
@@ -58,7 +60,7 @@ employeeRouter.route('/:employeeId')
 		next(error);
 	}
 })
-.delete(async (req, res, next) => {
+.delete(authenticate.verifyUser, authenticate.verifyAdmin, async (req, res, next) => {
 	try {
 		const resp = await Employees.findByIdAndRemove(req.params.employeeId);
 		res.statusCode = 200;

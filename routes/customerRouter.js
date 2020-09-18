@@ -1,10 +1,12 @@
 var express = require('express');
 const Customers = require('../models/customers');
 
+var authenticate = require('../authenticate');
+
 var customerRouter = express.Router();
 
 customerRouter.route('/')
-.get(async (req, res, next) => {
+.get(authenticate.verifyUser, async (req, res, next) => {
 	try {
 		const customers = await Customers.find({}).populate('projects');
 		res.statusCode = 200;
@@ -18,7 +20,7 @@ customerRouter.route('/')
     res.statusCode = 403;
     res.end('PUT operation not supported on /customers');
 })
-.post(async (req, res, next) => {
+.post(authenticate.verifyUser, async (req, res, next) => {
 	try {
 		const customer = await Customers.create(req.body);
 		res.statusCode = 200;
@@ -34,7 +36,7 @@ customerRouter.route('/')
 });
 
 customerRouter.route('/:customerId')
-.get(async (req, res, next) => {
+.get(authenticate.verifyUser, async (req, res, next) => {
 	try {
 		const customer = await Customers.findById(req.params.customerId).populate('projects');
 		res.statusCode = 200;
@@ -48,7 +50,7 @@ customerRouter.route('/:customerId')
 	res.statusCode = 403;
 	res.end('POST operation not supported on /customers/'+ req.params.customerId);
 })
-.put(async (req, res, next) => {
+.put(authenticate.verifyUser, async (req, res, next) => {
 	try {
 		const customer = await Customers.findByIdAndUpdate(req.params.customerId, { $set: req.body }, { new: true }); //new returns the modified customer data
 		res.statusCode = 200;
@@ -58,7 +60,7 @@ customerRouter.route('/:customerId')
 		next(error);
 	}
 })
-.delete(async (req, res, next) => {
+.delete(authenticate.verifyUser, authenticate.verifyAdmin, async (req, res, next) => {
 	try {
 		const resp = await Customers.findByIdAndRemove(req.params.customerId);
 		res.statusCode = 200;
