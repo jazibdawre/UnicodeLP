@@ -20,7 +20,7 @@ Tasks for Unicode learning period
 ```
 npm start
 ```
-## Settings
+## Endpoints
 All root endpoints have their separate router in `./routes` folder
 
 |Endpoints              |Description                                                                    |Methods               |
