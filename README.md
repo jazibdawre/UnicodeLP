@@ -28,8 +28,8 @@ All root endpoints have their separate router in `./routes` folder
 |/                      |The default page (just for redirects)                                          |GET                   |
 |/users                 |Endpoint for the users registered on the website                               |GET DELETE            |
 |/users/:userId         |Details of specified user                                                      |GET PUT DELETE        |
-|/users/signup          |Endpoint for registeration (returns JWT token)                                 |POST                  |
-|/users/login           |Endpoint for logging in (returns JWT token)                                    |POST                  |
+|/users/signup          |Endpoint for registeration (returns JWT)                                       |POST                  |
+|/users/login           |Endpoint for logging in (returns JWT)                                          |POST                  |
 |/users/logout          |At present just redirects to `/`. Can be used to invalidate/blacklist JWT      |GET                   |
 |/employees             |List of users currently employeed.                                             |GET POST DELETE       |
 |/employees/:employeeId |Details of specified employee                                                  |GET PUT DELETE        |
