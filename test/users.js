@@ -14,7 +14,7 @@ let token;
 describe('Users', () => {
 	before((done) => {
 		chai.request(app)
-			.post('/users/signup')
+			.post('/users/login')
 			.send(credentials)
 			.end((err, res) => {
 				if (err) done(err);
@@ -26,7 +26,7 @@ describe('Users', () => {
 	describe('GET /', () => {
 		it('should get list of all users', (done) => {
 			chai.request(app)
-				.get('/')
+				.get('/users')
 				.set({ Authorization: `Bearer ${token}` })
 				.end((err, res) => {
 					if (err) done(err);
@@ -37,7 +37,7 @@ describe('Users', () => {
 		});
 		it('should return not found', (done) => {
 			chai.request(app)
-				.get(`/signup`)
+				.get(`/users/signup`)
 				.end((err, res) => {
 					if (err) done(err);
 					res.should.have.status(404);
@@ -46,7 +46,7 @@ describe('Users', () => {
 		});
 		it('should return not found', (done) => {
 			chai.request(app)
-				.get(`/login`)
+				.get(`/users/login`)
 				.end((err, res) => {
 					if (err) done(err);
 					res.should.have.status(404);
@@ -56,7 +56,7 @@ describe('Users', () => {
 		it('should get a single user record', (done) => {
 			const userid = 5; //Get from demo
 			chai.request(app)
-				.get(`/${userid}`)
+				.get(`/users/${userid}`)
 				.set({ Authorization: `Bearer ${token}` })
 				.end((err, res) => {
 					if (err) done(err);
@@ -70,7 +70,7 @@ describe('Users', () => {
 	describe('PUT /', () => {
 		it('should return not found', (done) => {
 			chai.request(app)
-				.put('/')
+				.put('/users')
 				.end((err, res) => {
 					if (err) done(err);
 					res.should.have.status(404);
@@ -79,7 +79,7 @@ describe('Users', () => {
 		});
 		it('should return not found', (done) => {
 			chai.request(app)
-				.put(`/signup`)
+				.put(`/users/signup`)
 				.end((err, res) => {
 					if (err) done(err);
 					res.should.have.status(404);
@@ -88,7 +88,7 @@ describe('Users', () => {
 		});
 		it('should return not found', (done) => {
 			chai.request(app)
-				.put(`/login`)
+				.put(`/users/login`)
 				.end((err, res) => {
 					if (err) done(err);
 					res.should.have.status(404);
@@ -98,7 +98,7 @@ describe('Users', () => {
 		it('should update a single user record', (done) => {
 			const userid = 5; //Get from demo
 			chai.request(app)
-				.put(`/${userid}`)
+				.put(`/users/${userid}`)
 				.set({ Authorization: `Bearer ${token}` })
 				.end((err, res) => {
 					if (err) done(err);
@@ -112,7 +112,7 @@ describe('Users', () => {
 	describe('POST /', () => {
 		it('should return not found', (done) => {
 			chai.request(app)
-				.post('/')
+				.post('/users')
 				.end((err, res) => {
 					if (err) done(err);
 					res.should.have.status(404);
@@ -121,7 +121,7 @@ describe('Users', () => {
 		});
 		it('should return jwt', (done) => {
 			chai.request(app)
-				.post(`/signup`)
+				.post(`/users/signup`)
 				.end((err, res) => {
 					if (err) done(err);
 					res.should.have.status(200);
@@ -131,7 +131,7 @@ describe('Users', () => {
 		});
 		it('should return jwt', (done) => {
 			chai.request(app)
-				.post(`/login`)
+				.post(`/users/login`)
 				.end((err, res) => {
 					if (err) done(err);
 					res.should.have.status(200);
@@ -142,7 +142,7 @@ describe('Users', () => {
 		it('should return forbidden', (done) => {
 			const userid = 5; //Get from demo
 			chai.request(app)
-				.post(`/${userid}`)
+				.post(`/users/${userid}`)
 				.end((err, res) => {
 					if (err) done(err);
 					res.should.have.status(403);
@@ -154,7 +154,7 @@ describe('Users', () => {
 	describe('DELETE /', () => {
 		it('should return not found', (done) => {
 			chai.request(app)
-				.delete('/')
+				.delete('/users')
 				.end((err, res) => {
 					if (err) done(err);
 					res.should.have.status(404);
@@ -163,7 +163,7 @@ describe('Users', () => {
 		});
 		it('should return not found', (done) => {
 			chai.request(app)
-				.delete(`/signup`)
+				.delete(`/users/signup`)
 				.end((err, res) => {
 					if (err) done(err);
 					res.should.have.status(404);
@@ -172,7 +172,7 @@ describe('Users', () => {
 		});
 		it('should return not found', (done) => {
 			chai.request(app)
-				.delete(`/login`)
+				.delete(`/users/login`)
 				.end((err, res) => {
 					if (err) done(err);
 					res.should.have.status(404);
@@ -182,7 +182,7 @@ describe('Users', () => {
 		it('should delete a single user record', (done) => {
 			const userid = 5; //Get from demo
 			chai.request(app)
-				.delete(`/${userid}`)
+				.delete(`/users/${userid}`)
 				.set({ Authorization: `Bearer ${token}` })
 				.end((err, res) => {
 					if (err) done(err);
