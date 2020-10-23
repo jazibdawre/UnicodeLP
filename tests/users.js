@@ -1,15 +1,21 @@
-import chai from 'chai';
-import chaiHttp from 'chai-http';
-import app from '../app';
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const app = require('../app');
 
 chai.use(chaiHttp);
 chai.should();
 
 let credentials = {
-	username: 'admin',
-	password: 'password',
+	username: 'jazib',
+	password: 'jazib',
 };
-let token;
+
+let dummy = {
+	username: 'jazib2',
+	password: 'jazib2',
+};
+
+const userid = '5f9310f36ce9d702a4376aeb';
 
 describe('Users', () => {
 	before((done) => {
@@ -31,30 +37,29 @@ describe('Users', () => {
 				.end((err, res) => {
 					if (err) done(err);
 					res.should.have.status(200);
-					res.body.should.be.a('object');
+					res.body.should.be.a('array');
 					done();
 				});
 		});
-		it('should return not found', (done) => {
+		it('should return unauthorized', (done) => {
 			chai.request(app)
 				.get(`/users/signup`)
 				.end((err, res) => {
 					if (err) done(err);
-					res.should.have.status(404);
+					res.should.have.status(401);
 					done();
 				});
 		});
-		it('should return not found', (done) => {
+		it('should return unauthorized', (done) => {
 			chai.request(app)
 				.get(`/users/login`)
 				.end((err, res) => {
 					if (err) done(err);
-					res.should.have.status(404);
+					res.should.have.status(401);
 					done();
 				});
 		});
 		it('should get a single user record', (done) => {
-			const userid = 5; //Get from demo
 			chai.request(app)
 				.get(`/users/${userid}`)
 				.set({ Authorization: `Bearer ${token}` })
@@ -71,32 +76,32 @@ describe('Users', () => {
 		it('should return not found', (done) => {
 			chai.request(app)
 				.put('/users')
+				.set({ Authorization: `Bearer ${token}` })
 				.end((err, res) => {
 					if (err) done(err);
 					res.should.have.status(404);
 					done();
 				});
 		});
-		it('should return not found', (done) => {
+		it('should return not allowed', (done) => {
 			chai.request(app)
 				.put(`/users/signup`)
 				.end((err, res) => {
 					if (err) done(err);
-					res.should.have.status(404);
+					res.should.have.status(401);
 					done();
 				});
 		});
-		it('should return not found', (done) => {
+		it('should return not allowed', (done) => {
 			chai.request(app)
 				.put(`/users/login`)
 				.end((err, res) => {
 					if (err) done(err);
-					res.should.have.status(404);
+					res.should.have.status(401);
 					done();
 				});
 		});
 		it('should update a single user record', (done) => {
-			const userid = 5; //Get from demo
 			chai.request(app)
 				.put(`/users/${userid}`)
 				.set({ Authorization: `Bearer ${token}` })
@@ -113,6 +118,7 @@ describe('Users', () => {
 		it('should return not found', (done) => {
 			chai.request(app)
 				.post('/users')
+				.set({ Authorization: `Bearer ${token}` })
 				.end((err, res) => {
 					if (err) done(err);
 					res.should.have.status(404);
@@ -122,6 +128,7 @@ describe('Users', () => {
 		it('should return jwt', (done) => {
 			chai.request(app)
 				.post(`/users/signup`)
+				.send(dummy)
 				.end((err, res) => {
 					if (err) done(err);
 					res.should.have.status(200);
@@ -132,6 +139,7 @@ describe('Users', () => {
 		it('should return jwt', (done) => {
 			chai.request(app)
 				.post(`/users/login`)
+				.send(dummy)
 				.end((err, res) => {
 					if (err) done(err);
 					res.should.have.status(200);
@@ -140,7 +148,6 @@ describe('Users', () => {
 				});
 		});
 		it('should return forbidden', (done) => {
-			const userid = 5; //Get from demo
 			chai.request(app)
 				.post(`/users/${userid}`)
 				.end((err, res) => {
@@ -155,32 +162,32 @@ describe('Users', () => {
 		it('should return not found', (done) => {
 			chai.request(app)
 				.delete('/users')
+				.set({ Authorization: `Bearer ${token}` })
 				.end((err, res) => {
 					if (err) done(err);
 					res.should.have.status(404);
 					done();
 				});
 		});
-		it('should return not found', (done) => {
+		it('should return not allowed', (done) => {
 			chai.request(app)
 				.delete(`/users/signup`)
 				.end((err, res) => {
 					if (err) done(err);
-					res.should.have.status(404);
+					res.should.have.status(401);
 					done();
 				});
 		});
-		it('should return not found', (done) => {
+		it('should return not allowed', (done) => {
 			chai.request(app)
 				.delete(`/users/login`)
 				.end((err, res) => {
 					if (err) done(err);
-					res.should.have.status(404);
+					res.should.have.status(401);
 					done();
 				});
 		});
 		it('should delete a single user record', (done) => {
-			const userid = 5; //Get from demo
 			chai.request(app)
 				.delete(`/users/${userid}`)
 				.set({ Authorization: `Bearer ${token}` })
