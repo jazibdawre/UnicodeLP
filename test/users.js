@@ -186,7 +186,8 @@ describe('Users', () => {
 				.set({ Authorization: `Bearer ${token}` })
 				.end((err, res) => {
 					if (err) done(err);
-					res.should.have.status(404);
+					res.should.have.status(200);
+					res.body.should.be.a('object');
 					done();
 				});
 		});
