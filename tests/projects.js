@@ -11,13 +11,13 @@ let credentials = {
 };
 
 let dummy = {
-	name: 'ProjectX',
+	name: 'ProjectZ',
 	customer: '5f4798b2daefa420143313c9',
 	employees: ['5f4797efdfa4082bc0a17d7e'],
 	startdate: '2020-08-27T11:24:31.396+00:00',
 };
 
-const projectid = '5f930d7d6ce9d702a4376aea';
+const projectid = '5f931876b348612ea889af1d';
 
 describe('Projects', () => {
 	before((done) => {

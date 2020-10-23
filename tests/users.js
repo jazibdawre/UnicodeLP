@@ -12,10 +12,10 @@ let credentials = {
 
 let dummy = {
 	username: 'jazib2',
-	password: 'jazib2',
+	password: 'jazib',
 };
 
-const userid = '5f9310f36ce9d702a4376aeb';
+const userid = '5f931877b348612ea889af1e';
 
 describe('Users', () => {
 	before((done) => {
