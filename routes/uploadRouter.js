@@ -29,7 +29,7 @@ uploadRouter
 		res.statusCode = 403;
 		res.end('GET operation not allowed on /uploadFile');
 	})
-	.post(authenticate.verifyUser, upload.single('File'), (req, res, next) => {
+	.post(authenticate.verifyUser, upload.single('file'), (req, res, next) => {
 		//upload single => single file to be uploaded
 		res.statusCode = 200;
 		res.setHeader('Content-Type', 'application/json');
