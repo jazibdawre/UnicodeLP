@@ -45,7 +45,7 @@ uploadRouter
 	});
 
 uploadRouter
-	.route('/download/:filename')
+	.route('/getFile/:filename')
 	.get((req, res, next) => {
 		const file = path.join(
 			__dirname,
